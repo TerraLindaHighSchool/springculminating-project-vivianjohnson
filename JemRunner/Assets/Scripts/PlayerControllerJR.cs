@@ -5,10 +5,9 @@ using UnityEngine;
 public class PlayerControllerJR : MonoBehaviour
 {
     private Rigidbody playerRb;
-    public float horizontalInput;
-    public float forwardInput; 
-    public float jumpForce = 10.0f; 
     public float turnSpeed; 
+    public float jumpForce = 10.0f;
+    public float horizontalInput; 
     public float speed = 10.0f; 
     public bool isOnGround = true;
     public bool gameOver;
@@ -22,8 +21,7 @@ public class PlayerControllerJR : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        forwardInput = Input.GetAxis("Vertical"); 
+        horizontalInput = Input.GetAxis("Horizontal"); 
 
         if(Input.GetKeyDown(KeyCode.Space)&& isOnGround && !gameOver)
         {
@@ -33,7 +31,8 @@ public class PlayerControllerJR : MonoBehaviour
         if(!gameOver)
         {
             transform.Translate(Vector3.forward * Time.deltaTime * speed);
-            transform.Rotate(Vector3.up, turnSpeed * horizontalInput * Time.deltaTime);  
+            transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * horizontalInput); 
+            
         }
     }
 }
