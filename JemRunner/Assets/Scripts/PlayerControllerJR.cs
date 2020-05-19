@@ -23,16 +23,15 @@ public class PlayerControllerJR : MonoBehaviour
     {
         horizontalInput = Input.GetAxis("Horizontal"); 
 
-        if(Input.GetKeyDown(KeyCode.Space)&& isOnGround && !gameOver)
-        {
-            playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            isOnGround = false; 
-        }
         if(!gameOver)
         {
             transform.Translate(Vector3.forward * Time.deltaTime * speed);
-            transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * horizontalInput); 
-            
+            transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * horizontalInput);
+            if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
+            {
+                playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                isOnGround = false;
+            }
         }
     }
 }
