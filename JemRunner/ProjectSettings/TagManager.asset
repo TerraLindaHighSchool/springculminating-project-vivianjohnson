@@ -4,9 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Ground
+  - Point
+  - Finish Line
   - Obstacle
-  - Road
   layers:
   - Default
   - TransparentFX

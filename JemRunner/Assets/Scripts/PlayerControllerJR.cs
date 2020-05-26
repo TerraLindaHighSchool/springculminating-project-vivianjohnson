@@ -13,7 +13,9 @@ public class PlayerControllerJR : MonoBehaviour
     public bool isOnGround = true;
     public bool gameOver = false;
     public ParticleSystem explosionParticle;
-    public ParticleSystem dirtParticle; 
+    public ParticleSystem dirtParticle;
+    private int gemCount = 0;
+    public bool hasGem; 
 
     // Start is called before the first frame update
     void Start()
@@ -59,6 +61,25 @@ public class PlayerControllerJR : MonoBehaviour
                 gameOver = true;
             }
  
-        } 
+        }
+        if(collision.gameObject.CompareTag("Finish Line"))
+        {
+            Debug.Log("You made it to the finish line! You beat the game! Now onto the next level");
+            dirtParticle.Stop();
+            playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            playerAnim.SetTrigger("Jump_trig");
+            gameOver = true;
+             
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Point"))
+        {
+            gemCount++;
+            Debug.Log("Great job! You have: " + gemCount + " gems in your bag"); 
+            hasGem = true;
+            Destroy(other.gameObject); 
+        }
     }
 }
