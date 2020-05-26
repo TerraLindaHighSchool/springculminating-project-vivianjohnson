@@ -6,13 +6,13 @@ public class PlayerControllerJR : MonoBehaviour
 {
     private Rigidbody playerRb;
     private Animator playerAnim;
-    private int numLives = 3; 
+    private int numLives = 2; 
     public float turnSpeed; 
     public float jumpForce = 10.0f;
     public float horizontalInput; 
     public float speed = 10.0f; 
     public bool isOnGround = true;
-    public bool gameOver;
+    public bool gameOver = false;
     public ParticleSystem explosionParticle;
 
     // Start is called before the first frame update
@@ -48,7 +48,7 @@ public class PlayerControllerJR : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Obstacle"))
         {
-            numLives--;
+           numLives--;
             Debug.Log("Oh no you have " + numLives + " lives left!");
             if(numLives == 1)
             {
@@ -56,8 +56,8 @@ public class PlayerControllerJR : MonoBehaviour
             }
             if(numLives == 0)
             {
-                Debug.Log("Game Over");
                 explosionParticle.Play();
+                Debug.Log("Game Over");
                 playerAnim.SetBool("Death_b", true);
                 playerAnim.SetInteger("DeathType_int", 1);
                 gameOver = true;
