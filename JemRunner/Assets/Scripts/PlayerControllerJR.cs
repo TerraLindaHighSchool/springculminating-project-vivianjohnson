@@ -10,6 +10,8 @@ public class PlayerControllerJR : MonoBehaviour
     private Animator playerAnim;
     public Button restartButton;
     private Rigidbody playerRb;
+    public GameObject player;
+    private Vector3 offset = new Vector3(0, 1, 0);
     private int gemCount = 0;
     public float jumpForce = 10.0f;
     public float speed = 10.0f;
@@ -19,10 +21,12 @@ public class PlayerControllerJR : MonoBehaviour
     public bool gameOver = false;
     public bool hasGem;
     public bool isGameActive;
+    public bool hasPowerup; 
     public ParticleSystem explosionParticle;
     public ParticleSystem dirtParticle;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI gameOvertext;
+    public GameObject powerupIndicator; 
 
 
     // Start is called before the first frame update
@@ -51,6 +55,10 @@ public class PlayerControllerJR : MonoBehaviour
                 playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                 isOnGround = false;
                 playerAnim.SetTrigger("Jump_trig");
+            }
+            if(hasPowerup == true)
+            {
+                powerupIndicator.transform.position = player.transform.position + offset;
             }
         }
     }
@@ -86,6 +94,14 @@ public class PlayerControllerJR : MonoBehaviour
             hasGem = true;
             Destroy(other.gameObject);
         }
+        if (other.CompareTag("Powerup"))
+        {
+            hasPowerup = true;
+            Destroy(other.gameObject);
+            jumpForce = 16;
+            StartCoroutine(PowerupCountdownRoutine());
+            powerupIndicator.gameObject.SetActive(true); 
+        }
         if (other.CompareTag("Finish Line"))
         {
             Debug.Log("You made it to the finish line! You beat the game! Now onto the next level");
@@ -110,5 +126,12 @@ public class PlayerControllerJR : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    IEnumerator PowerupCountdownRoutine()
+    {
+        yield return new WaitForSeconds(5);
+        hasPowerup = false;
+        powerupIndicator.gameObject.SetActive(false); 
     }
 }
