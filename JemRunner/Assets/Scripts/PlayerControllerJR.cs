@@ -8,9 +8,17 @@ using UnityEngine.UI;
 public class PlayerControllerJR : MonoBehaviour
 {
     private Animator playerAnim;
+    public AudioClip jumpSound;
+    public AudioClip crashSound;
+    private AudioSource playerAudio; 
     public Button restartButton;
-    private Rigidbody playerRb;
     public GameObject player;
+    public GameObject powerupIndicator;
+    public ParticleSystem explosionParticle;
+    public ParticleSystem dirtParticle;
+    private Rigidbody playerRb;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI gameOvertext;
     private Vector3 offset = new Vector3(0, 1, 0);
     private int gemCount = 0;
     public float jumpForce = 10.0f;
@@ -22,11 +30,7 @@ public class PlayerControllerJR : MonoBehaviour
     public bool hasGem;
     public bool isGameActive;
     public bool hasPowerup; 
-    public ParticleSystem explosionParticle;
-    public ParticleSystem dirtParticle;
-    public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI gameOvertext;
-    public GameObject powerupIndicator; 
+
 
 
     // Start is called before the first frame update
@@ -38,6 +42,7 @@ public class PlayerControllerJR : MonoBehaviour
         UpdateScore(0);
         gameOvertext.gameObject.SetActive(false);
         restartButton.gameObject.SetActive(false);
+        playerAudio = GetComponent<AudioSource>(); 
     }
 
     // Update is called once per frame
@@ -55,6 +60,7 @@ public class PlayerControllerJR : MonoBehaviour
                 playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                 isOnGround = false;
                 playerAnim.SetTrigger("Jump_trig");
+                playerAudio.PlayOneShot(jumpSound, 1.0f); 
             }
             if(hasPowerup == true)
             {
@@ -74,6 +80,7 @@ public class PlayerControllerJR : MonoBehaviour
         {
             {
                 explosionParticle.Play();
+                playerAudio.PlayOneShot(crashSound, 1.0f); 
                 dirtParticle.Stop();
                 Debug.Log("Game Over");
                 playerAnim.SetBool("Death_b", true);
