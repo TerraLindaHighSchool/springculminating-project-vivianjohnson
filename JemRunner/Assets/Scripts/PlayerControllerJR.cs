@@ -17,9 +17,9 @@ public class PlayerControllerJR : MonoBehaviour
     public GameObject powerupIndicator;
     public ParticleSystem explosionParticle;
     public ParticleSystem dirtParticle;
-    private Rigidbody playerRb;
+    private Rigidbody playerRb; 
     public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI gameOvertext; 
+    public TextMeshProUGUI gameOvertext;
     private Vector3 offset = new Vector3(0, 1, 0);
     private int gemCount = 0;
     public float jumpForce = 10.0f;
@@ -30,8 +30,8 @@ public class PlayerControllerJR : MonoBehaviour
     public bool gameOver = false;
     public bool hasGem;
     public bool isGameActive;
-    public bool hasPowerup; 
-
+    public bool hasPowerup;
+    public string sceneName; 
 
 
     // Start is called before the first frame update
@@ -43,14 +43,15 @@ public class PlayerControllerJR : MonoBehaviour
         UpdateScore(0);
         gameOvertext.gameObject.SetActive(false);
         restartButton.gameObject.SetActive(false);
-        playerAudio = GetComponent<AudioSource>(); 
+        playerAudio = GetComponent<AudioSource>();
+        sceneName = SceneManager.GetActiveScene().name;
     }
 
     // Update is called once per frame
     void Update()
     {
         horizontalInput = Input.GetAxis("Horizontal");
-
+     
         if (isGameActive == true && !gameOver)
         {
             transform.Translate(Vector3.forward * Time.deltaTime * speed);
@@ -97,10 +98,10 @@ public class PlayerControllerJR : MonoBehaviour
     {
         if (other.CompareTag("Point"))
         {
-            UpdateScore(1);
-            Debug.Log("Great job! You have: " + gemCount + " gems in your bag");
-            hasGem = true;
-            Destroy(other.gameObject);
+                UpdateScore(1);
+                hasGem = true;
+                Destroy(other.gameObject);
+           
         }
         if (other.CompareTag("Powerup"))
         {
@@ -112,7 +113,6 @@ public class PlayerControllerJR : MonoBehaviour
         }
         if (other.CompareTag("Finish Line"))
         {
-            Debug.Log("You made it to the finish line! You beat the game! Now onto the next level");
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); 
 
         }
@@ -125,11 +125,11 @@ public class PlayerControllerJR : MonoBehaviour
     }
 
     public void GameOver()
-    {
+    { 
         isGameActive = false;
         restartButton.gameObject.SetActive(true);
-        goToMainMenuButton.gameObject.SetActive(true); 
-        gameOvertext.gameObject.SetActive(true); 
+        goToMainMenuButton.gameObject.SetActive(true);
+        gameOvertext.gameObject.SetActive(true);
     }
 
     public void RestartGame()

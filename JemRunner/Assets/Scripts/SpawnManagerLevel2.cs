@@ -13,7 +13,7 @@ public class SpawnManagerLevel2 : MonoBehaviour
     {
         SpawnGemWave(45);
         SpawnPowerup(5);
-        SpawnObstacles(50); 
+        SpawnObstacles(45); 
     }
 
     // Update is called once per frame
