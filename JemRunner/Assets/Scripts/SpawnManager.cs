@@ -10,7 +10,7 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SpawnEnemyWave(15);
+        SpawnGemWave(15);
         SpawnPowerup(3); 
     }
 
@@ -28,7 +28,7 @@ public class SpawnManager : MonoBehaviour
         return randomPos; 
     }
 
-    void SpawnEnemyWave(int gemsToSpawn)
+    void SpawnGemWave(int gemsToSpawn)
     {
         for(int i = 0; i < gemsToSpawn; i++)
         {

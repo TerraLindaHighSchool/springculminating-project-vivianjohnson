@@ -12,13 +12,14 @@ public class PlayerControllerJR : MonoBehaviour
     public AudioClip crashSound;
     private AudioSource playerAudio; 
     public Button restartButton;
+    public Button goToMainMenuButton; 
     public GameObject player;
     public GameObject powerupIndicator;
     public ParticleSystem explosionParticle;
     public ParticleSystem dirtParticle;
     private Rigidbody playerRb;
     public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI gameOvertext;
+    public TextMeshProUGUI gameOvertext; 
     private Vector3 offset = new Vector3(0, 1, 0);
     private int gemCount = 0;
     public float jumpForce = 10.0f;
@@ -112,7 +113,7 @@ public class PlayerControllerJR : MonoBehaviour
         if (other.CompareTag("Finish Line"))
         {
             Debug.Log("You made it to the finish line! You beat the game! Now onto the next level");
-            GameOver();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); 
 
         }
     }
@@ -126,8 +127,9 @@ public class PlayerControllerJR : MonoBehaviour
     public void GameOver()
     {
         isGameActive = false;
-        gameOvertext.gameObject.SetActive(true);
         restartButton.gameObject.SetActive(true);
+        goToMainMenuButton.gameObject.SetActive(true); 
+        gameOvertext.gameObject.SetActive(true); 
     }
 
     public void RestartGame()
@@ -140,5 +142,10 @@ public class PlayerControllerJR : MonoBehaviour
         yield return new WaitForSeconds(5);
         hasPowerup = false;
         powerupIndicator.gameObject.SetActive(false); 
+    }
+
+   public void GoToMainMenu()
+    {
+        SceneManager.LoadScene("Start"); 
     }
 }
