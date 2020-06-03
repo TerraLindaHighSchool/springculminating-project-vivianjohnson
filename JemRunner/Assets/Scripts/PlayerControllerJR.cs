@@ -12,7 +12,7 @@ public class PlayerControllerJR : MonoBehaviour
     public AudioClip crashSound;
     private AudioSource playerAudio; 
     public Button restartButton;
-    public Button goToMainMenuButton; 
+    public Button goToMainMenuButton;
     public GameObject player;
     public GameObject powerupIndicator;
     public ParticleSystem explosionParticle;
@@ -148,4 +148,7 @@ public class PlayerControllerJR : MonoBehaviour
     {
         SceneManager.LoadScene("Start"); 
     }
+
+   
+   
 }
