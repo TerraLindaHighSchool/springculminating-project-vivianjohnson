@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SpawnManagerLevel2 : MonoBehaviour
 {
@@ -13,7 +15,11 @@ public class SpawnManagerLevel2 : MonoBehaviour
     {
         SpawnGemWave(45);
         SpawnPowerup(5);
-        SpawnObstacles(45); 
+        SpawnObstacles(45);
+        if(SceneManager.GetActiveScene().name.Equals("Level 3"))
+        {
+            SpawnObstacles(25); 
+        }
     }
 
     // Update is called once per frame
@@ -32,7 +38,7 @@ public class SpawnManagerLevel2 : MonoBehaviour
     private Vector3 GenerateObstacleSpawnPosition()
     {
         float obsPosX = Random.Range(-8, 8);
-        float obsPosZ = Random.Range(10, 420);
+        float obsPosZ = Random.Range(15, 420);
         Vector3 randomObsPos = new Vector3(obsPosX, 0, obsPosZ);
         return randomObsPos; 
     }

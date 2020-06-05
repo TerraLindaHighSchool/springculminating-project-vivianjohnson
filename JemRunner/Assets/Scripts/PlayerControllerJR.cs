@@ -45,6 +45,7 @@ public class PlayerControllerJR : MonoBehaviour
         restartButton.gameObject.SetActive(false);
         playerAudio = GetComponent<AudioSource>();
         sceneName = SceneManager.GetActiveScene().name;
+        hasPowerup = false; 
     }
 
     // Update is called once per frame
@@ -64,10 +65,18 @@ public class PlayerControllerJR : MonoBehaviour
                 playerAnim.SetTrigger("Jump_trig");
                 playerAudio.PlayOneShot(jumpSound, 1.0f); 
             }
-            if(hasPowerup == true)
+            if (hasPowerup == true)
             {
                 powerupIndicator.transform.position = player.transform.position + offset;
             }
+            else
+                jumpForce = 12.0f;
+
+            if(player.transform.position.y <= -1 )
+            {
+                GameOver(); 
+            }
+
         }
     }
 
